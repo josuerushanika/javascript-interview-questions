@@ -517,6 +517,7 @@
 | 468 | [How to find the number of parameters expected by a function?](#how-to-find-the-number-of-parameters-expected-by-a-function) |
 | 469 | [What is globalThis, and what is the importance of it?](#what-is-globalthis-and-what-is-the-importance-of-it) |
 | 470 | [What are the array mutation methods?](#what-are-the-array-mutation-methods) |
+| 471 | [What is module scope in JavaScript?](#what-is-module-scope-in-javascript) |
 <!-- TOC_END -->
 
 <!-- QUESTIONS_START -->
@@ -1511,7 +1512,7 @@
 
 51. ### What is a promise
 
-    A promise is an object that may produce a single value some time in the future with either a resolved value or a reason that it’s not resolved(for example, network error). It will be in one of the 3 possible states: fulfilled, rejected, or pending.
+    A promise is an object that may produce a single value some time in the future with either a resolved value or a reason that it’s not resolved (i.e. rejected, that means for example, due to a network error). It will be in one of the 3 possible states: fulfilled, rejected, or pending.
 
     The syntax of Promise creation looks like below,
 
@@ -1580,7 +1581,7 @@
 
 55. ### Why do we need callbacks
 
-    The callbacks are needed because javascript is an event driven language. That means instead of waiting for a response javascript will keep executing while listening for other events.
+    The callbacks are needed because javascript is an event driven language. That means instead of waiting for a response, javascript will keep executing while listening for other events.
     Let's take an example with the first function invoking an API call(simulated by setTimeout) and the next function which logs the message.
 
     ```javascript
@@ -1596,7 +1597,7 @@
     firstFunction();
     secondFunction();
 
-    Output;
+    // Output:
     // Second function called
     // First function called
     ```
@@ -1625,7 +1626,7 @@
 
 57. ### What are server-sent events
 
-    Server-sent events (SSE) is a server push technology enabling a browser to receive automatic updates from a server via HTTP connection without resorting to polling. These are a one way communications channel - events flow from server to client only. This has been used in Facebook/Twitter updates, stock price updates, news feeds etc.
+    Server-sent events (SSE) is a server push technology enabling a browser to receive automatic updates from a server via HTTP connection without resorting to polling. These are a one way communications channel - events flow from server to client only. This has been used in Facebook/Twitter/X updates, stock price updates, news feeds etc.
 
     **[⬆ Back to Top](#table-of-contents)**
 
@@ -1682,7 +1683,7 @@
 
 62. ### What is callback in callback
 
-    You can nest one callback inside in another callback to execute the actions sequentially one by one. This is known as callbacks in callbacks.
+    You can nest one callback inside in another callback to execute the actions sequentially one by one. This is known as callbacks in callbacks. Beware, too many levels of nesting lead to [Callback hell](https://github.com/ckpinguin/javascript-interview-questions/tree/master?tab=readme-ov-file#what-is-a-callback-hell)
 
     ```javascript
     loadScript("/script1.js", function (script) {
@@ -1765,7 +1766,7 @@
 
 66. ### What is a strict mode in javascript
 
-    Strict Mode is a new feature in ECMAScript 5 that allows you to place a program, or a function, in a “strict” operating context. This way it prevents certain actions from being taken and throws more exceptions. The literal expression `"use strict";` instructs the browser to use the javascript code in the Strict mode.
+    Strict Mode is a new feature in ECMAScript 5 that allows you to place a program, or a function, in a “strict” operating context. This way it prevents certain actions from being taken and throws more exceptions. The literal expression `"use strict";` instructs the browser to use the javascript code in the Strict mode. This also enables block-scoped variables.
 
     **[⬆ Back to Top](#table-of-contents)**
 
@@ -1904,7 +1905,7 @@
 
     | Window                                                                        | Document                                                                                      |
     | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-    | It is the root level element in any web page                                  | It is the direct child of the window object. This is also known as Document Object Model(DOM) |
+    | It is the root level element in any web page                                  | It is the direct child of the window object. This is also known as Document Object Model (DOM) |
     | By default window object is available implicitly in the page                  | You can access it via window.document or document.                                            |
     | It has methods like alert(), confirm() and properties like document, location | It provides methods like getElementById, getElementsByTagName, createElement etc              |
 
@@ -1931,7 +1932,7 @@
 
     The `mouseEvent getModifierState()` is used to return a boolean value that indicates whether the specified modifier key is activated or not. The modifiers such as CapsLock, ScrollLock and NumLock are activated when they are clicked, and deactivated when they are clicked again.
 
-    Let's take an input element to detect the CapsLock on/off behavior with an example,
+    Let's take an input element to detect the CapsLock on/off behavior with an example:
 
     ```html
     <input type="password" onmousedown="enterInput(event)" />
@@ -1972,6 +1973,14 @@
     | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
     | These variables do not exist in a program and are not declared                              | These variables declared in the program but have not assigned any value                |
     | If you try to read the value of an undeclared variable, then a runtime error is encountered | If you try to read the value of an undefined variable, an undefined value is returned. |
+
+        ```javascript
+    var a;
+    a; // yields undefined
+
+    b; // Throws runtime error like „Uncaught ReferenceError: b is not defined“
+    ```
+    This can be confusing, because it says „not defined“ instead of „not declared“ (Chrome)
 
     **[⬆ Back to Top](#table-of-contents)**
 
@@ -2158,13 +2167,13 @@
 
 94. ### What is the difference between an attribute and a property
 
-    Attributes are defined on the HTML markup whereas properties are defined on the DOM. For example, the below HTML element has 2 attributes type and value,
+    Attributes are defined on the HTML markup whereas properties are defined on the DOM. For example, the below HTML element has 2 attributes: `type` and `value`,
 
     ```javascript
     <input type="text" value="Name:">
     ```
 
-    You can retrieve the attribute value as below,
+    You can retrieve the attribute value as below, for example after typing "Good morning" into the input field:
 
     ```javascript
     const input = document.querySelector("input");
@@ -2723,7 +2732,7 @@
 
 132. ### How do you compare two date objects
 
-     You need to use date.getTime() method to compare date values instead of comparison operators (==, !=, ===, and !== operators)
+     You need to use date.getTime() method in order to compare unix timestamp values
 
      ```javascript
      var d1 = new Date();
@@ -2788,7 +2797,7 @@
      object.key3 = "value3";
      ```
 
-     2. **Using square bracket notation:** This solution is useful when the name of the property is dynamically determined.
+     2. **Using square bracket notation:** This solution is useful when the name of the property is dynamically determined or the key's name is non-JS like "user-name"
 
      ```javascript
      obj["key3"] = "value3";
@@ -2841,7 +2850,7 @@
 
 140. ### Can we define properties for functions
 
-     Yes, We can define properties for functions because functions are also objects.
+     Yes, we can define properties for functions because functions are also objects.
 
      ```javascript
      fn = function (x) {
@@ -3184,7 +3193,7 @@
 
 162. ### What would be the result of 1+2+'3'
 
-     The output is going to be `33`. Since `1` and `2` are numeric values, the result of the first two digits is going to be a numeric value `3`. The next digit is a string type value because of that the addition of numeric value `3` and string type value `3` is just going to be a concatenation value `33`.
+     The output is going to be `33`. Since `1` and `2` are numeric values, the result of the first two digits is going to be a numeric value `3`. The next digit is a string type value because of that the addition of numeric value `3` and string type value `3` is just going to be a concatenation value `33`. Other operationrs like `3 * '3'` do yield correct results because the string is coerced into a number.
 
      **[⬆ Back to Top](#table-of-contents)**
 
@@ -3320,7 +3329,7 @@
      You can use the toLocaleString() method to convert dates in one timezone to another. For example, let's convert current date to British English timezone as below,
 
      ```javascript
-     console.log(event.toLocaleString("en-GB", { timeZone: "UTC" })); //29/06/2019, 09:56:00
+     console.log(new Date().toLocaleString("en-GB", { timeZone: "UTC" })); //29/06/2019, 09:56:00
      ```
 
      **[⬆ Back to Top](#table-of-contents)**
@@ -3794,7 +3803,7 @@
 
 195. ### What is the purpose of seal method
 
-     The **Object.seal()** method is used to seal an object, by preventing new properties from being added to it and marking all existing properties as non-configurable. But values of present properties can still be changed as long as they are writable. Let's see the below example to understand more about seal() method
+     The **Object.seal()** method is used to seal an object, by preventing new properties from being added to it and marking all existing properties as non-configurable. But values of present properties can still be changed as long as they are writable. The next level of immutability would be the [`Object.freeze()`](#what-is-a-freeze-method) method. Let's see the below example to understand more about seal() method
 
      ```javascript
      const object = {
@@ -3814,7 +3823,7 @@
      Below are the main applications of Object.seal() method,
 
      1. It is used for sealing objects and arrays.
-     2. It is used to make an object immutable.
+     2. It is used to make properties of an object non-configurable.
 
      **[⬆ Back to Top](#table-of-contents)**
 
@@ -8841,6 +8850,23 @@ The execution context is created when a function is called. The function's code 
       **[⬆ Back to Top](#table-of-contents)**
 
 466. ### What is the purpose of requestAnimationFrame method?
+The requestAnimationFrame() method in JavaScript is used to schedule a function to be called before the next repaint of the browser window, allowing you to create smooth, efficient animations. It's primarily used for animations and visual updates, making it an essential tool for improving performance when you're animating elements on the web.
+```javascript
+const element = document.getElementById("myElement");
+function animate() {
+    let currentPosition = parseInt(window.getComputedStyle(element).left, 10);
+
+    // Move the element 2px per frame
+    currentPosition += 2;
+    element.style.left = currentPosition + 'px';  
+    // If the element hasn't moved off-screen, request the next frame
+    if (currentPosition < window.innerWidth) {
+        requestAnimationFrame(animate);
+    }
+}
+// Start the animation
+requestAnimationFrame(animate);
+```
 
 **[⬆ Back to Top](#table-of-contents)**
      
@@ -8946,6 +8972,54 @@ The `globalThis` property provides a standard way of accessing the global object
    7. **reverse:** Reverses the order of elements in the given array.
    8. **fill:**  Fills all elements of the array with a specific value.
    9. **copyWithIn:** Copies a sequence of elements within the array to a specified target index in the same array.
+
+**[⬆ Back to Top](#table-of-contents)**
+
+471. ### What is module scope in JavaScript?
+  Module scope is a feature introduced with ES6 (ES2015) modules that creates a scope specific to a module file, isolating variables and functions declared within it from the global scope and other modules. Variables and functions declared in a module are private by default and can only be accessed by other modules if they are explicitly exported.
+
+   Key characteristics of module scope:
+
+   1. Variables declared in a module are scoped to that module only.
+   2. Each module has its own top-level scope
+   3. Variables and functions need to be explicitly exported to be used in other modules
+   4. The global scope cannot access module variables unless they are explicitly exported and imported
+   5. Modules are always executed in strict mode
+   
+  ```javascript
+  // moduleA.js
+
+  // This variable is PRIVATE to moduleA. It's like a tool inside a closed box.
+  const privateVariable = "I am private";
+
+  // This variable is PUBLIC because it's exported. Others can use it when they import moduleA.
+  export const publicVariable = "I am public";
+
+  // PUBLIC function because it's exported. But it can still access privateVariable inside moduleA.
+  export function publicFunction() {
+      console.log(privateVariable); // ✅ This works because we're inside the same module.
+      return "Hello from publicFunction!";
+  }
+
+  // moduleB.js
+
+  // Importing PUBLIC items from moduleA.
+  import { publicVariable, publicFunction } from './moduleA.js';
+
+  console.log(publicVariable);       // ✅ "I am public" - Works because it's exported.
+  console.log(publicFunction());     // ✅ "Hello from publicFunction!" - Works as well.
+
+  // ❌ This will cause an ERROR because privateVariable was NOT exported from moduleA.
+  // console.log(privateVariable);   // ❌ ReferenceError: privateVariable is not defined
+
+  ```
+  Common use cases and benefits:
+
+  - Encapsulation of module-specific code
+  - Prevention of global scope pollution
+  - Better code organization and maintenance
+  - Explicit dependency management
+  - Protection of private implementation details
 
 **[⬆ Back to Top](#table-of-contents)**
 
